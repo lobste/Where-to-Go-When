@@ -1,0 +1,31 @@
+---
+interface Props {
+  type: 'beach' | 'culture' | 'winter' | 'nature' | 'festival';
+}
+
+const { type } = Astro.props;
+
+const icons = {
+  beach: '🏖️',
+  culture: '🏛️',
+  winter: '❄️',
+  nature: '🌲',
+  festival: '🎭'
+};
+
+const labels = {
+  beach: 'Beach Destination',
+  culture: 'Cultural Experience',
+  winter: 'Winter Activities',
+  nature: 'Nature & Adventure',
+  festival: 'Festivals & Events'
+};
+---
+
+<span 
+  class="inline-flex items-center text-sm font-medium text-gray-600" 
+  title={labels[type]}
+>
+  <span class="mr-1">{icons[type]}</span>
+  <span class="hidden sm:inline">{labels[type]}</span>
+</span>

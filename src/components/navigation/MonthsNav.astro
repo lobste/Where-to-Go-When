@@ -1,0 +1,83 @@
+---
+import { getMonthName } from '../../utils/dateUtils';
+
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+const currentMonth = getMonthName(new Date());
+---
+
+<nav class="months-nav">
+  <div class="md:hidden">
+    <select 
+      class="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      onchange="window.location.href=`/destinations/${this.value.toLowerCase()}`"
+    >
+      <option value="">Select Month</option>
+      {months.map(month => (
+        <option 
+          value={month}
+          selected={month.toLowerCase() === currentMonth}
+        >
+          {month}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  <div class="hidden md:block months-scroll">
+    <div class="flex space-x-6 px-4">
+      {months.map(month => (
+        <a
+          href={`/destinations/${month.toLowerCase()}`}
+          class:list={[
+            'month-link whitespace-nowrap py-2 text-base transition-all duration-300',
+            month.toLowerCase() === currentMonth 
+              ? 'active font-semibold text-blue-600 border-b-2 border-blue-500'
+              : 'text-gray-600 hover:text-blue-600'
+          ]}
+        >
+          {month}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<style>
+  .months-scroll {
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .months-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  .month-link {
+    position: relative;
+  }
+
+  .month-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #3182ce;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .month-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .month-link.active::after {
+    transform: scaleX(1);
+  }
+</style>

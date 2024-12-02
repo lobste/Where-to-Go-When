@@ -1,0 +1,77 @@
+---
+interface Props {
+  attractions: string[];
+  localExperiences: string[];
+  quickTips: {
+    temperature: string;
+    budget: 'Budget' | 'Moderate' | 'Luxury';
+    attire: string;
+  };
+}
+
+const { attractions, localExperiences, quickTips } = Astro.props;
+---
+
+<section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+  <h2 class="font-playfair text-2xl mb-6 flex items-center">
+    <span class="inline-block w-8 h-8 mr-3">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+      </svg>
+    </span>
+    3-Minute Guide
+  </h2>
+
+  <div class="space-y-6">
+    <div>
+      <h3 class="text-lg font-semibold mb-3 flex items-center text-gray-800">
+        <span class="inline-block w-6 h-6 mr-2">🏛️</span>
+        Must-See Attractions
+      </h3>
+      <ul class="space-y-2">
+        {attractions.map(attraction => (
+          <li class="flex items-start">
+            <span class="text-blue-500 mr-2">•</span>
+            <span class="text-gray-600">{attraction}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-lg font-semibold mb-3 flex items-center text-gray-800">
+        <span class="inline-block w-6 h-6 mr-2">🍽️</span>
+        Local Foods & Activities
+      </h3>
+      <ul class="space-y-2">
+        {localExperiences.map(experience => (
+          <li class="flex items-start">
+            <span class="text-blue-500 mr-2">•</span>
+            <span class="text-gray-600">{experience}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-lg font-semibold mb-3 flex items-center text-gray-800">
+        <span class="inline-block w-6 h-6 mr-2">💡</span>
+        Quick Tips
+      </h3>
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <p class="text-sm font-medium text-gray-500">Temperature</p>
+          <p class="text-gray-700">{quickTips.temperature}</p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">Budget Level</p>
+          <p class="text-gray-700">{quickTips.budget}</p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">What to Wear</p>
+          <p class="text-gray-700">{quickTips.attire}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

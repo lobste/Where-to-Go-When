@@ -1,0 +1,55 @@
+---
+import type { Destination } from '../../data/destinations';
+
+interface Props {
+  destination: Destination;
+}
+
+const { destination } = Astro.props;
+---
+
+<article class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+  <div class="h-64 overflow-hidden">
+    <img 
+      src={`/images/destinations/${destination.image}`}
+      alt={destination.title}
+      class="w-full h-full object-cover hover:scale-105 transition"
+    />
+  </div>
+  
+  <div class="p-6">
+    <h3 class="font-playfair text-2xl mb-2">{destination.title}</h3>
+    <p class="text-gray-600 mb-4">{destination.description}</p>
+    
+    <div class="space-y-4">
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-2">Weather</h4>
+        <p class="text-gray-600">{destination.weather}</p>
+      </div>
+      
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-2">Highlights</h4>
+        <ul class="list-disc list-inside text-gray-600">
+          {destination.highlights.map(highlight => (
+            <li>{highlight}</li>
+          ))}
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-2">Events</h4>
+        <ul class="list-disc list-inside text-gray-600">
+          {destination.events.map(event => (
+            <li>{event}</li>
+          ))}
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-2">Why Visit</h4>
+        <p class="text-gray-600">{destination.whyVisit}</p>
+      </div>
+    </div>
+  </div>
+</article>
+---

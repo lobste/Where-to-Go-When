@@ -1,0 +1,97 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import DestinationHero from '../../../components/destinations/DestinationHero.astro';
+import QuickFacts from '../../../components/destinations/QuickFacts.astro';
+import Highlights from '../../../components/destinations/Highlights.astro';
+import ThreeMinuteGuide from '../../../components/destinations/ThreeMinuteGuide.astro';
+import TravelerRecommendations from '../../../components/destinations/TravelerRecommendations.astro';
+import { destinations } from '../../../data/destinations';
+import { isValidMonth } from '../../../utils/dateUtils';
+
+export function getStaticPaths() {
+  return Object.entries(destinations).flatMap(([month, monthDestinations]) =>
+    monthDestinations.map(destination => ({
+      params: { 
+        month,
+        destination: destination.title.toLowerCase().replace(/\s+/g, '-')
+      },
+      props: { month, destination }
+    }))
+  );
+}
+
+const { month, destination } = Astro.props;
+
+// Validate month parameter
+if (!isValidMonth(month)) {
+  return Astro.redirect('/404');
+}
+
+// Sample traveler recommendations (in a real app, this would come from a database)
+const recommendations = [
+  {
+    name: "Sarah Johnson",
+    title: "Hidden Gems Off the Tourist Trail",
+    content: "Found the most amazing local restaurant down a quiet alley. The owner treated us like family!",
+    photo: "/images/travelers/sarah.jpg",
+    likes: 42
+  },
+  {
+    name: "Mike Chen",
+    title: "Best Time to Visit Popular Spots",
+    content: "Pro tip: Visit early morning to avoid crowds and get the best photos.",
+    photo: "/images/travelers/mike.jpg",
+    likes: 38
+  }
+];
+---
+
+<Layout title={`${destination.title} Travel Guide - Where to Go When`}>
+  <DestinationHero
+    title={destination.title}
+    description={destination.description}
+    image={destination.image}
+  />
+  
+  <main class="max-w-7xl mx-auto px-4 py-12">
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <ThreeMinuteGuide
+          attractions={destination.highlights}
+          localExperiences={[
+            "Try local street food at night markets",
+            "Join a traditional cooking class"
+          ]}
+          quickTips={{
+            temperature: destination.weather,
+            budget: "Moderate",
+            attire: "Casual, comfortable clothing"
+          }}
+        />
+        
+        <Highlights highlights={destination.highlights} />
+        
+        <TravelerRecommendations recommendations={recommendations} />
+      </div>
+      
+      <div>
+        <QuickFacts
+          weather={destination.weather}
+          events={destination.events}
+        />
+      </div>
+    </div>
+    
+    <div class="mt-12">
+      <a
+        href={`/destinations/${month}`}
+        class="inline-flex items-center text-blue-600 hover:text-blue-800"
+      >
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to {month.charAt(0).toUpperCase() + month.slice(1)} Destinations
+      </a>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/home/Hero.astro';
+import MonthlyTimeline from '../components/home/MonthlyTimeline.astro';
+import DestinationCard from '../components/destinations/DestinationCard.astro';
+import { destinations } from '../data/destinations';
+import { getMonthName } from '../utils/dateUtils';
+
+const currentMonth = getMonthName(new Date());
+const currentDestinations = destinations[currentMonth] || destinations.january;
+---
+
+<Layout title="Where to Go When - Travel Guide">
+  <Hero />
+  
+  <main class="max-w-7xl mx-auto px-4 py-16">
+    <MonthlyTimeline />
+    
+    <section>
+      <h2 class="font-playfair text-4xl text-center mb-12">
+        Top Destinations for {currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1)}
+      </h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {currentDestinations.map(destination => (
+          <DestinationCard {...destination} month={currentMonth} />
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -1,0 +1,60 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DestinationCard from '../../components/destinations/DestinationCard.astro';
+import { destinations } from '../../data/destinations';
+import { isValidMonth } from '../../utils/dateUtils';
+
+export function getStaticPaths() {
+  const months = [
+    'january', 'february', 'march', 'april', 'may', 'june',
+    'july', 'august', 'september', 'october', 'november', 'december'
+  ];
+  
+  return months.map(month => ({
+    params: { month },
+    props: { month }
+  }));
+}
+
+const { month } = Astro.params;
+
+// Validate month parameter
+if (!isValidMonth(month || '')) {
+  return Astro.redirect('/404');
+}
+
+const monthDestinations = destinations[month as keyof typeof destinations] || [];
+const capitalizedMonth = month?.charAt(0).toUpperCase() + month?.slice(1);
+---
+
+<Layout title={`${capitalizedMonth} Destinations - Where to Go When`}>
+  <main class="max-w-7xl mx-auto px-4 py-16">
+    <h1 class="font-playfair text-5xl text-center mb-12">
+      Best Places to Visit in {capitalizedMonth}
+    </h1>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {monthDestinations.map(destination => (
+        <DestinationCard {...destination} month={month} />
+      ))}
+    </div>
+
+    {monthDestinations.length === 0 && (
+      <div class="text-center py-12">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          Coming Soon!
+        </h2>
+        <p class="text-gray-600 text-lg mb-8">
+          We're currently curating the best destinations for {capitalizedMonth}. 
+          Check back soon for exciting travel recommendations!
+        </p>
+        <a 
+          href="/destinations" 
+          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
+        >
+          Explore Other Months
+        </a>
+      </div>
+    )}
+  </main>
+</Layout>

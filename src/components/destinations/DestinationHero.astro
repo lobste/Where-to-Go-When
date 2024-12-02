@@ -1,0 +1,29 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+}
+
+const { title, description, image } = Astro.props;
+---
+
+<section class="relative h-[60vh] flex items-center justify-center">
+  <div class="absolute inset-0 overflow-hidden">
+    <img 
+      src={`/images/destinations/${image}`}
+      alt={title}
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+  
+  <div class="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+    <h1 class="font-playfair text-5xl md:text-6xl mb-6">
+      {title}
+    </h1>
+    <p class="text-xl md:text-2xl font-light">
+      {description}
+    </p>
+  </div>
+</section>

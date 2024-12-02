@@ -1,0 +1,50 @@
+---
+import DestinationIcon from './DestinationIcon.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  weather: string;
+  events: string[];
+  month: string;
+  type: 'beach' | 'culture' | 'winter' | 'nature' | 'festival';
+}
+
+const { title, description, image, weather, events, month, type } = Astro.props;
+const destinationSlug = title.toLowerCase().replace(/\s+/g, '-');
+---
+
+<article class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
+  <a href={`/destinations/${month}/${destinationSlug}`} class="block">
+    <div class="relative h-64 overflow-hidden">
+      <img 
+        src={`/images/destinations/${image}`}
+        alt={title}
+        class="w-full h-full object-cover hover:scale-105 transition"
+      />
+      <div class="absolute top-4 right-4">
+        <DestinationIcon type={type} />
+      </div>
+    </div>
+    
+    <div class="p-6">
+      <h3 class="font-playfair text-2xl mb-2">{title}</h3>
+      <p class="text-gray-600 mb-4">{description}</p>
+      
+      <div class="space-y-4">
+        <div>
+          <span class="text-sm font-semibold text-blue-600">Weather: </span>
+          <span class="text-sm text-gray-600">{weather}</span>
+        </div>
+        
+        <div>
+          <h4 class="text-sm font-semibold text-gray-800 mb-2">Key Events:</h4>
+          <ul class="list-disc list-inside text-sm text-gray-600">
+            {events.map(event => <li>{event}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>

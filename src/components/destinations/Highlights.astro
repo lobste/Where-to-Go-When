@@ -1,0 +1,24 @@
+---
+interface Props {
+  highlights: string[];
+}
+
+const { highlights } = Astro.props;
+---
+
+<section class="py-12">
+  <h2 class="font-playfair text-3xl mb-8">Things to Do</h2>
+  
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {highlights.map(highlight => (
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-6">
+          <h3 class="font-semibold text-xl mb-2">{highlight}</h3>
+          <p class="text-gray-600">
+            Discover this amazing attraction and make unforgettable memories.
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
