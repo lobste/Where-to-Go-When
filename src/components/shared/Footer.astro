@@ -1,0 +1,64 @@
+---
+const currentYear = new Date().getFullYear();
+
+const footerLinks = {
+  'About': [
+    { label: 'Our Story', href: '/about' },
+    
+  ],
+  'Destinations': [
+    { label: 'Popular Places', href: '/destinations' },
+    { label: 'Travel Guides', href: '/guides' },
+    { label: 'Seasonal Tips', href: '/tips' }
+  ],
+  'Resources': [
+    { label: 'Blog', href: '/blog' },
+    { label: 'Travel Planning', href: '/planning' },
+    
+  ],
+  'Connect': [
+    { label: 'Contact Us', href: '/contact' },
+    
+  ]
+};
+---
+
+<footer class="bg-gray-900 text-gray-300">
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {Object.entries(footerLinks).map(([category, links]) => (
+        <div>
+          <h3 class="text-white font-semibold mb-4">{category}</h3>
+          <ul class="space-y-2">
+            {links.map(link => (
+              <li>
+                <a 
+                  href={link.href}
+                  class="hover:text-white transition-colors duration-300"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="border-t border-gray-800 mt-12 pt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm">
+          © {currentYear} Where To Go When. All rights reserved.
+        </p>
+        <div class="flex gap-6 mt-4 md:mt-0">
+          <a href="/privacy" class="text-sm hover:text-white transition-colors duration-300">
+            Privacy Policy
+          </a>
+          <a href="/terms" class="text-sm hover:text-white transition-colors duration-300">
+            Terms of Service
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
