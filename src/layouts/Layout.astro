@@ -7,6 +7,7 @@ import '@fontsource/playfair-display/600.css';
 import '@fontsource/open-sans/400.css';
 import '@fontsource/open-sans/600.css';
 import Navbar from '../components/navigation/Navbar.astro';
+import Footer from '../components/shared/Footer.astro';
 
 interface Props {
   title: string;
@@ -25,8 +26,11 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-gray-50 font-['Open Sans']">
+  <body class="bg-gray-50 font-['Open Sans'] min-h-screen flex flex-col">
     <Navbar />
-    <slot />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>
